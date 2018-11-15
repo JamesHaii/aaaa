@@ -1,30 +1,42 @@
-# blog
+**请求方式：**
+- POST 
 
-> A Vue.js project
+**参数：** 
 
-## Build Setup
+|参数名|必选|类型|说明|示例|
+|:----    |:---|:----- |-----   |----- |
+|id |是  |int |用户ID   | 54352523546 |
+|mobile |是  |int |手机号    | 123|
 
-``` bash
-# install dependencies
-npm install
+ **成功时，返回示例**
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+``` 
+  {
+    "error_code": 0,
+    "msg": "操作成功",
+	"jump": "需要前端跳转的url",
+    "data": {}
+  }
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+ **失败时，返回示例**
+
+``` 
+  {
+    "error_code": -1,
+    "msg": "失败原因",
+	"jump": "",
+    "data": {}
+  }
+```
+
+ **返回参数说明** 
+
+|参数名|类型|说明|
+|:-----  |:-----|-----                           |
+|error_code |int   |状态码 【0：成功，非零值：失败】  |
+|msg |string   |返回消息  |
+|jump |string   |跳转URL  |
+|data |json   |返回数据  |
+
+ **备注** 
