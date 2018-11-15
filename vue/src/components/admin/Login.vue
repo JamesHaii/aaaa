@@ -22,7 +22,7 @@ export default {
     //     callback();
     //   }
     // }
-  
+
     return {
       ruleForm: {
         name: "",
@@ -34,34 +34,50 @@ export default {
           { min: 2, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" }
         ],
         // pass: [{ validator: validatePass, trigger: "blur" }]此处的写法要配合上面的var validatePass, 但是下面的写法快
-        pass: [{required: true,message: '请输password',trigger: "blur"}]
+        pass: [{ required: true, message: "请输password", trigger: "blur" }]
       }
-    }
+    };
   },
-   methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid, obj) => {
-          if (valid) {
-            fetch('/api/site/login',{
-              method:"post",
-              body: JSON.stringify({name:this.ruleForm.name,pwd:this.ruleForm.pass}),
-            }).then(res=>res.json()).then(res=>{
-              if(res.code === 200){
-                this.$router.push({path:'/'});
-              }
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid, obj) => {
+        if (valid) {
+          fetch("/api/site/login", {
+            method: "post",
+            body: JSON.stringify({
+              name: this.ruleForm.name,
+              pwd: this.ruleForm.pass
             })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (res.code === 200) {
+                this.$message({
+                  message: "登录成功，正在跳转...",
+                  duration: 1500,
+                  type: "success",
+                  onClose: ()=>{
+                    this.$router.push({ path: "/" });
+                  }
+                });
+              } else {
+                this.$message({
+                  message: "密码不正确",
+                  type: "error"
+                });
+              }
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
-
-}
+  }
+};
 </script>
 <style>
 .btn {
