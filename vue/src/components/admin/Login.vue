@@ -46,7 +46,9 @@ export default {
               method:"post",
               body: JSON.stringify({name:this.ruleForm.name,pwd:this.ruleForm.pass}),
             }).then(res=>res.json()).then(res=>{
-              console.log(res)
+              if(res.code === 200){
+                this.$router.push({path:'/'});
+              }
             })
           } else {
             console.log('error submit!!');
